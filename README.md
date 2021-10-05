@@ -1,70 +1,61 @@
-# Getting Started with Create React App
+# React Electron Template
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Overview
+Setup instructions and demo app for creating an electron app with react.
+Includes creation instructions and debug setup for Webstorm.
 
-## Available Scripts
+## Setup Instructions
+```
+yarn create react-app my-app
+yarn add electron electron-builder electron-is-dev
+yarn add concurrently wait-on
+```
 
-In the project directory, you can run:
+Add the following to package.json:
+```
+"main": "public/electron.js"
+```
 
-### `yarn start`
+Add a build and dev script that starts debug on port 9222:
+```
+"scripts": {
+  ... other script
+  "ebuild": "yarn run build && node_modules/.bin/build",
+  "dev": "concurrently \"yarn start\" \"wait-on http://localhost:3000 && electron --remote-debugging-port=9222 .\""
+}
+```
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Add a .env file with the following to disable browser popup:
+```
+BROWSER=none
+```
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+Add a _/electron_ directory in the project root
+```
+react-electron-template
+|
+ --electron
+|
+ --public
+|
+ --src
+```
 
-### `yarn test`
+Create a file _/electron/main.js_ and add the contents found in this project
+```
+/electron/main.js
+```
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Add the following properties to _package.json_:
+```
+"homepage": "./",
+"main": "./electron/main.js"
+```
 
-### `yarn build`
+To debug, start app from terminal with:
+```
+yarn run dev
+```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `yarn eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `yarn build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Remote debug in webstorm using setup below:
+![Debug Settings](image/WebstormDebug.png)

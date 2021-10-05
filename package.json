@@ -2,20 +2,29 @@
   "name": "react-electron-template",
   "version": "0.1.0",
   "private": true,
+  "homepage": "./",
+  "main": "./electron/main.js",
   "dependencies": {
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
+    "concurrently": "^6.3.0",
+    "electron": "^15.1.1",
+    "electron-builder": "^22.11.7",
+    "electron-is-dev": "^2.0.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-scripts": "4.0.3",
+    "wait-on": "^6.0.0",
     "web-vitals": "^1.0.1"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "ebuild": "yarn run build && node_modules/.bin/build",
+    "dev": "concurrently \"yarn start\" \"wait-on http://localhost:3000 && electron --remote-debugging-port=9222 .\""
   },
   "eslintConfig": {
     "extends": [
